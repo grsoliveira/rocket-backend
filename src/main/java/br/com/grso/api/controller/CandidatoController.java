@@ -2,10 +2,7 @@ package br.com.grso.api.controller;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import br.com.grso.common.dto.CandidatoDTO;
 import br.com.grso.domain.service.CandidatoService;
@@ -14,7 +11,6 @@ import lombok.AllArgsConstructor;
 @RestController
 @RequestMapping(value = "/api/candidato")
 @AllArgsConstructor
-//@Tag(name = "Candidato Endpoints", description = "Endpoints para gerenciar dados dos candidatos")
 public class CandidatoController {
 
 	private final CandidatoService candidatoService;
@@ -24,5 +20,6 @@ public class CandidatoController {
 		CandidatoDTO candaidatoDTO = candidatoService.salvarCandidato(candidato);
 		return new ResponseEntity<>(candaidatoDTO, HttpStatus.CREATED);
 	}
+
 
 }
