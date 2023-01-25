@@ -18,11 +18,5 @@ public class UsuarioController {
 
     private final UsuarioService service;
 
-    //TODO remover método
-    @PostMapping
-    public ResponseEntity<UsuarioDTO> salvar(@RequestBody UsuarioDTO dto) {
-        UsuarioDTO usuarioDTO = service.salvar(dto);
-        return new ResponseEntity<>(usuarioDTO, HttpStatus.CREATED);
-    }
 
 }

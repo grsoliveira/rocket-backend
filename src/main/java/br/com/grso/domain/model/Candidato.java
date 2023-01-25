@@ -38,4 +38,7 @@ public class Candidato implements Serializable {
 	@Column(name = "nome_completo_da_mae")
 	private String nomeCompletoDaMae;
 
+	@Column(name = "aprovado", columnDefinition = "boolean default null")
+	private Boolean aprovado = false;
+
 }
