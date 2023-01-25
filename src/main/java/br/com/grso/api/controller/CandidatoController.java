@@ -17,8 +17,8 @@ public class CandidatoController {
 
 	@PostMapping
 	public ResponseEntity<CandidatoDTO> salvar(@RequestBody CandidatoDTO candidato) {
-		CandidatoDTO candaidatoDTO = candidatoService.salvarCandidato(candidato);
-		return new ResponseEntity<>(candaidatoDTO, HttpStatus.CREATED);
+		CandidatoDTO candidatoDTO = candidatoService.salvarCandidato(candidato);
+		return new ResponseEntity<>(candidatoDTO, HttpStatus.CREATED);
 	}
 
 
