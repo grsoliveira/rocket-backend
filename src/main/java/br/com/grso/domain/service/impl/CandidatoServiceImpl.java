@@ -2,6 +2,7 @@ package br.com.grso.domain.service.impl;
 
 import br.com.grso.api.security.PasswordHelper;
 import br.com.grso.common.dto.CandidatoDTO;
+import br.com.grso.domain.exception.CreationException;
 import br.com.grso.domain.model.Candidato;
 import br.com.grso.domain.repository.CandidatoRepository;
 import br.com.grso.domain.service.CandidatoService;
@@ -37,18 +38,25 @@ public class CandidatoServiceImpl implements CandidatoService {
     }
 
     @Override
-    public CandidatoDTO salvar(CandidatoDTO dto) {
+    public CandidatoDTO salvar(CandidatoDTO dto) throws CreationException {
         CandidatoDTO result = null;
 
         dto.setId(null);
         dto.setAprovado(null);
 
-        if (this.getQuantidadeInscricoes(dto.getCpf()) < 2) {
-            Candidato candidato = modelMapper.map(dto, Candidato.class);
-            candidato.setSenha(this.encriptarSenha(candidato.getSenha()));
-            this.repository.save(candidato);
-            result = modelMapper.map(candidato, CandidatoDTO.class);
+        if (this.repository.getInscricoesPendentes(dto.getCpf()) > 0) {
+            throw new CreationException("Candidato possui inscricao pendente de avaliação.");
+        } else {
+            if (this.repository.getQuantidadeInscricoesRecusadas(dto.getCpf()) >= 2) {
+                throw new CreationException("Candidato já possui dois cadastros realizados.");
+            } else {
+                Candidato candidato = modelMapper.map(dto, Candidato.class);
+                candidato.setSenha(this.encriptarSenha(candidato.getSenha()));
+                this.repository.save(candidato);
+                result = modelMapper.map(candidato, CandidatoDTO.class);
+            }
         }
+
         return result;
     }
 

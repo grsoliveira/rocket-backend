@@ -1,6 +1,7 @@
 package br.com.grso.api.controller;
 
 import br.com.grso.common.dto.CandidatoDTO;
+import br.com.grso.domain.exception.CreationException;
 import br.com.grso.domain.service.CandidatoService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -8,6 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Objects;
 
 @RestController
 @RequestMapping(value = "/api/candidato")
@@ -16,10 +18,17 @@ public class CandidatoController {
 
 	private final CandidatoService candidatoService;
 
+	//TODO melhorar retorno da chamada ao método salvar
 	@PostMapping
-	public ResponseEntity<CandidatoDTO> salvar(@RequestBody CandidatoDTO candidato) {
-		CandidatoDTO candidatoDTO = candidatoService.salvar(candidato);
-		return new ResponseEntity<>(candidatoDTO, HttpStatus.CREATED);
+	public ResponseEntity<Object> salvar(@RequestBody CandidatoDTO candidato) {
+		CandidatoDTO candidatoDTO = null;
+		try {
+			candidatoDTO = candidatoService.salvar(candidato);
+			return new ResponseEntity<>(candidatoDTO, HttpStatus.CREATED);
+
+		} catch (CreationException e) {
+			return new ResponseEntity<>(e.getMensagem(), HttpStatus.BAD_REQUEST);
+		}
 	}
 
 	@GetMapping(value = "/listar")
