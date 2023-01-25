@@ -1,0 +1,1 @@
+insert into usuario (username, password) values ('admin', '{bcrypt}$2a$10$bemaRpgCQ98350wVp0tEZO1420Oa0NVdO0swa.d3CzX/tMCN4YWiS');

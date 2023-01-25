@@ -6,7 +6,7 @@ import java.util.List;
 
 public interface CandidatoService {
 
-	CandidatoDTO salvarCandidato(CandidatoDTO candidato);
+	CandidatoDTO salvar(CandidatoDTO candidato);
 
     List<CandidatoDTO> listar();
 

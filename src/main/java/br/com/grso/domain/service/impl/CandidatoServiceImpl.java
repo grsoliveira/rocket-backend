@@ -30,16 +30,19 @@ public class CandidatoServiceImpl implements CandidatoService {
             byte messageDigest[] = algorithm.digest(senha.getBytes("UTF-8"));
             result = new String(messageDigest);
 
-        } catch (NoSuchAlgorithmException e) {
-            throw new RuntimeException(e);
-        } catch (UnsupportedEncodingException e) {
+        } catch (NoSuchAlgorithmException | UnsupportedEncodingException e) {
             throw new RuntimeException(e);
         }
         return result;
     }
+
     @Override
-    public CandidatoDTO salvarCandidato(CandidatoDTO dto) {
+    public CandidatoDTO salvar(CandidatoDTO dto) {
         CandidatoDTO result = null;
+
+        dto.setId(null);
+        dto.setAprovado(null);
+
         if (this.getQuantidadeInscricoes(dto.getCpf()) < 2) {
             Candidato candidato = modelMapper.map(dto, Candidato.class);
             candidato.setSenha(this.encriptarSenha(candidato.getSenha()));
