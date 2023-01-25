@@ -28,6 +28,12 @@ public class CandidatoController {
 		return new ResponseEntity<>(candidatos, HttpStatus.OK);
 	}
 
+	@GetMapping(value = "/consulta-situacao/{cpf}/{senha}")
+	public ResponseEntity<CandidatoDTO> consultar(String cpf, String senha) {
+		CandidatoDTO candidato = candidatoService.consultar(cpf, senha);
+		return new ResponseEntity<>(candidato, HttpStatus.OK);
+	}
+
 	@GetMapping(value = "/aprovar/{idCandidato}")
 	public ResponseEntity<CandidatoDTO> aprovar(@PathVariable Long idCandidato) {
 		CandidatoDTO candidatoDTO = candidatoService.aprovar(idCandidato);

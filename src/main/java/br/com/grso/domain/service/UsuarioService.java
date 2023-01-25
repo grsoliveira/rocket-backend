@@ -5,6 +5,4 @@ import br.com.grso.common.dto.UsuarioDTO;
 
 public interface UsuarioService {
 
-	UsuarioDTO salvar(UsuarioDTO dto);
-
 }

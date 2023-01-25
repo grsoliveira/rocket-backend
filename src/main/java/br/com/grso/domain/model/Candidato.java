@@ -3,17 +3,10 @@ package br.com.grso.domain.model;
 import java.io.Serializable;
 import java.time.LocalDate;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
+import org.hibernate.annotations.Type;
 
 @SuppressWarnings("serial")
 @Entity
@@ -35,10 +28,24 @@ public class Candidato implements Serializable {
 
 	private String cpf;
 
+	private String senha;
+
 	@Column(name = "nome_completo_da_mae")
 	private String nomeCompletoDaMae;
 
 	@Column(name = "aprovado", columnDefinition = "boolean default null")
 	private Boolean aprovado = false;
+
+	@Lob
+	@Type(type = "org.hibernate.type.ImageType")
+	private byte[] foto;
+
+	@Lob
+	@Type(type = "org.hibernate.type.ImageType")
+	private byte[] documento;
+
+	@Lob
+	@Type(type = "org.hibernate.type.ImageType")
+	private byte[] comprovante;
 
 }

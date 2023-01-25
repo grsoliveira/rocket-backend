@@ -12,4 +12,5 @@ public interface CandidatoRepository extends JpaRepository<Candidato, Long>{
     @Query("SELECT COUNT(*) FROM Candidato candidato WHERE candidato.cpf LIKE :cpf")
     public Integer getQuantidadeInscricoes(String cpf);
 
+    Candidato findByCpfAndSenha(String cpf, String senhaEncriptada);
 }
