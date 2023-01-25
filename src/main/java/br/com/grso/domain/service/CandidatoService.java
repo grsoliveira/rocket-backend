@@ -4,6 +4,6 @@ import br.com.grso.common.dto.CandidatoDTO;
 
 public interface CandidatoService {
 
-	CandidatoDTO saveCandidato(CandidatoDTO candidato);
+	CandidatoDTO salvarCandidato(CandidatoDTO candidato);
 
 }

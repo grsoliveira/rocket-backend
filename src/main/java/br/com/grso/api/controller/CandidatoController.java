@@ -9,20 +9,19 @@ import org.springframework.web.bind.annotation.RestController;
 
 import br.com.grso.common.dto.CandidatoDTO;
 import br.com.grso.domain.service.CandidatoService;
-import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.AllArgsConstructor;
 
 @RestController
-@RequestMapping(value = "/candidato")
+@RequestMapping(value = "/api/candidato")
 @AllArgsConstructor
-@Tag(name = "Candidato Endpoints", description = "Endpoints para gerenciar dados dos candidatos")
+//@Tag(name = "Candidato Endpoints", description = "Endpoints para gerenciar dados dos candidatos")
 public class CandidatoController {
 
 	private final CandidatoService candidatoService;
 
 	@PostMapping
-	public ResponseEntity<CandidatoDTO> saveProduct(@RequestBody CandidatoDTO candidato) {
-		CandidatoDTO candaidatoDTO = candidatoService.saveCandidato(candidato);
+	public ResponseEntity<CandidatoDTO> salvar(@RequestBody CandidatoDTO candidato) {
+		CandidatoDTO candaidatoDTO = candidatoService.salvarCandidato(candidato);
 		return new ResponseEntity<>(candaidatoDTO, HttpStatus.CREATED);
 	}
 

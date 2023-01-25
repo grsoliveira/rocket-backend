@@ -11,7 +11,7 @@ import lombok.AllArgsConstructor;
 public class CandidatoServiceImpl implements CandidatoService {
 
 	@Override
-	public CandidatoDTO saveCandidato(CandidatoDTO candidato) {
+	public CandidatoDTO salvarCandidato(CandidatoDTO candidato) {
 		// TODO Auto-generated method stub
 		return null;
 	}

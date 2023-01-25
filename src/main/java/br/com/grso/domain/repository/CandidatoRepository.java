@@ -7,5 +7,6 @@ import br.com.grso.domain.model.Candidato;
 
 @Repository
 public interface CandidatoRepository extends JpaRepository<Candidato, Long>{
+	
 
 }
