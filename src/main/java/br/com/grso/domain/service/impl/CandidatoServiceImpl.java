@@ -2,6 +2,7 @@ package br.com.grso.domain.service.impl;
 
 import br.com.grso.api.security.PasswordHelper;
 import br.com.grso.common.dto.CandidatoDTO;
+import br.com.grso.common.mappers.CandidatoModelMapper;
 import br.com.grso.domain.exception.CreationException;
 import br.com.grso.domain.model.Candidato;
 import br.com.grso.domain.repository.CandidatoRepository;
@@ -11,9 +12,11 @@ import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
 import java.io.UnsupportedEncodingException;
+import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
+import java.util.Base64;
 import java.util.List;
 import java.util.Optional;
 
@@ -21,7 +24,7 @@ import java.util.Optional;
 @AllArgsConstructor
 public class CandidatoServiceImpl implements CandidatoService {
 
-    private final ModelMapper modelMapper;
+    private final CandidatoModelMapper candidatoModelMapper;
     private final CandidatoRepository repository;
 
     private String encriptarSenha(String senha) {
@@ -50,10 +53,11 @@ public class CandidatoServiceImpl implements CandidatoService {
             if (this.repository.getQuantidadeInscricoesRecusadas(dto.getCpf()) >= 2) {
                 throw new CreationException("Candidato já possui dois cadastros realizados.");
             } else {
-                Candidato candidato = modelMapper.map(dto, Candidato.class);
+                Candidato candidato = this.candidatoModelMapper.dtoToEntity(dto);
+
                 candidato.setSenha(this.encriptarSenha(candidato.getSenha()));
                 this.repository.save(candidato);
-                result = modelMapper.map(candidato, CandidatoDTO.class);
+                result = this.candidatoModelMapper.entityToDto(candidato);
             }
         }
 
@@ -63,14 +67,14 @@ public class CandidatoServiceImpl implements CandidatoService {
     public CandidatoDTO consultar(String cpf, String senha) {
         final String senhaEncriptada = this.encriptarSenha(senha);
         Candidato candidato = this.repository.findByCpfAndSenha(cpf, senhaEncriptada);
-        return modelMapper.map(candidato, CandidatoDTO.class);
+        return this.candidatoModelMapper.entityToDto(candidato);
     }
 
     @Override
     public List<CandidatoDTO> listar() {
         List<CandidatoDTO> result = new ArrayList<>();
         this.repository.findAll().forEach(c -> {
-            result.add(this.modelMapper.map(c, CandidatoDTO.class));
+            result.add(this.candidatoModelMapper.entityToDto(c));
         });
         return result;
     }
@@ -81,7 +85,7 @@ public class CandidatoServiceImpl implements CandidatoService {
         if (candidato.isPresent()) {
             candidato.get().setAprovado(status);
             Candidato candidatoSalvo = this.repository.saveAndFlush(candidato.get());
-            dto = this.modelMapper.map(candidatoSalvo, CandidatoDTO.class);
+            dto = this.candidatoModelMapper.entityToDto(candidatoSalvo);
         }
         return dto;
     }

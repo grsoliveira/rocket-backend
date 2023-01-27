@@ -24,7 +24,7 @@ public class CandidatoDTO implements Serializable {
     private String senha;
     private String nomeCompletoDaMae;
     private Boolean aprovado = false;
-    private byte[] foto;
-    private byte[] documento;
-    private byte[] comprovante;
+    private String foto;
+    private String documento;
+    private String comprovante;
 }
