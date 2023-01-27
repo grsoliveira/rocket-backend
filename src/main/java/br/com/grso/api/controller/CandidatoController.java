@@ -14,6 +14,7 @@ import java.util.Objects;
 @RestController
 @RequestMapping(value = "/api/candidato")
 @AllArgsConstructor
+@CrossOrigin(allowedHeaders = "*", origins = "*")
 public class CandidatoController {
 
 	private final CandidatoService candidatoService;
@@ -38,7 +39,7 @@ public class CandidatoController {
 	}
 
 	@GetMapping(value = "/consulta-situacao/{cpf}/{senha}")
-	public ResponseEntity<CandidatoDTO> consultar(String cpf, String senha) {
+	public ResponseEntity<CandidatoDTO> consultar(@PathVariable String cpf, @PathVariable String senha) {
 		CandidatoDTO candidato = candidatoService.consultar(cpf, senha);
 		return new ResponseEntity<>(candidato, HttpStatus.OK);
 	}
