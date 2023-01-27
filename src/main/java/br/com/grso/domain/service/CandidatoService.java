@@ -16,4 +16,6 @@ public interface CandidatoService {
     CandidatoDTO reprovar(Long idCandidato);
 
     CandidatoDTO consultar(String cpf, String senha);
+
+    CandidatoDTO getPorId(Long id);
 }

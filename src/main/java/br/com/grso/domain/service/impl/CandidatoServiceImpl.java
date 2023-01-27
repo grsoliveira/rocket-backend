@@ -71,6 +71,16 @@ public class CandidatoServiceImpl implements CandidatoService {
     }
 
     @Override
+    public CandidatoDTO getPorId(Long id) {
+        CandidatoDTO result = null;
+        Optional<Candidato> optCandidato = this.repository.findById(id);
+        if (optCandidato.isPresent()) {
+            result = this.candidatoModelMapper.entityToDto(optCandidato.get());
+        }
+        return result;
+    }
+
+    @Override
     public List<CandidatoDTO> listar() {
         List<CandidatoDTO> result = new ArrayList<>();
         this.repository.findAll().forEach(c -> {

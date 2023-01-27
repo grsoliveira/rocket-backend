@@ -12,7 +12,7 @@ import java.util.List;
 import java.util.Objects;
 
 @RestController
-@RequestMapping(value = "/api/candidato")
+@RequestMapping(value = "/candidato")
 @AllArgsConstructor
 @CrossOrigin(allowedHeaders = "*", origins = "*")
 public class CandidatoController {
@@ -30,6 +30,12 @@ public class CandidatoController {
 		} catch (CreationException e) {
 			return new ResponseEntity<>(e.getMensagem(), HttpStatus.BAD_REQUEST);
 		}
+	}
+
+	@GetMapping(value = "/getPorId/{id}")
+	public ResponseEntity<CandidatoDTO> getPorId(@PathVariable Long id) {
+		CandidatoDTO candidato = candidatoService.getPorId(id);
+		return new ResponseEntity<>(candidato, HttpStatus.OK);
 	}
 
 	@GetMapping(value = "/listar")
